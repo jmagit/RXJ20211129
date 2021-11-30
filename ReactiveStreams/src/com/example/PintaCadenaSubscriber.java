@@ -3,7 +3,7 @@ package com.example;
 import java.util.concurrent.Flow;
 import java.util.concurrent.Flow.Subscription;
 
-public class PrintSubscriber implements Flow.Subscriber<Integer> {
+public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 	private Flow.Subscription subscription;
 	private boolean continuar = true;
 	
@@ -14,10 +14,9 @@ public class PrintSubscriber implements Flow.Subscriber<Integer> {
 	}
 
 	@Override
-	public void onNext(Integer item) {
-		System.out.println("PrintSubscriber: " + item);
+	public void onNext(String item) {
+		System.out.println(item);
 		if(continuar) subscription.request(1);
-		Sleeper.sleep(1000);
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class PrintSubscriber implements Flow.Subscriber<Integer> {
 
 	@Override
 	public void onComplete() {
-		System.out.println("PrintSubscriber onComplete");
+		System.out.println("PintaCadenaSubscriber onComplete");
 	}
 	
 	public void cancel() {
@@ -41,3 +40,6 @@ public class PrintSubscriber implements Flow.Subscriber<Integer> {
 	}
 
 }
+
+
+
