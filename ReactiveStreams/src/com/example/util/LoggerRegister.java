@@ -1,9 +1,12 @@
-package com.example.demos;
+package com.example.util;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.concurrent.Flow;
 import java.util.concurrent.Flow.Subscription;
 
-public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
+public class LoggerRegister implements Flow.Subscriber<String> {
+	private static Logger logger = java.lang.System.getLogger("APP");
 	private Flow.Subscription subscription;
 	private boolean continuar = true;
 	
@@ -15,7 +18,7 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 
 	@Override
 	public void onNext(String item) {
-		System.out.println(item);
+		logger.log(Level.ERROR, item);
 		if(continuar) subscription.request(1);
 	}
 
@@ -26,7 +29,6 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 
 	@Override
 	public void onComplete() {
-		System.out.println("PintaCadenaSubscriber onComplete");
 	}
 	
 	public void cancel() {
@@ -40,6 +42,3 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 	}
 
 }
-
-
-

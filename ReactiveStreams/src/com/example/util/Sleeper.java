@@ -1,4 +1,4 @@
-package com.example;
+package com.example.util;
 
 public class Sleeper {
 	public static void sleep(int time) {

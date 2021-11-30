@@ -1,9 +1,12 @@
-package com.example.demos;
+package com.example.ui.web;
 
 import java.util.concurrent.Flow;
 import java.util.concurrent.Flow.Subscription;
 
-public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
+import com.example.domains.entities.Notification;
+import com.example.util.Sleeper;
+
+public class PageNotificationDisplay implements Flow.Subscriber<Notification> {
 	private Flow.Subscription subscription;
 	private boolean continuar = true;
 	
@@ -14,8 +17,8 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 	}
 
 	@Override
-	public void onNext(String item) {
-		System.out.println(item);
+	public void onNext(Notification item) {
+		System.out.printf("<div><h1>%s</h1><p>%s</p></div>\n", item.getType().toString().toUpperCase(), item.getMessage());
 		if(continuar) subscription.request(1);
 	}
 
@@ -26,12 +29,10 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 
 	@Override
 	public void onComplete() {
-		System.out.println("PintaCadenaSubscriber onComplete");
 	}
 	
 	public void cancel() {
 		continuar = false;
-		//subscription.cancel();
 	}
 	
 	public void continua() {
@@ -40,6 +41,3 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 	}
 
 }
-
-
-

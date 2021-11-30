@@ -2,16 +2,17 @@ package com.example.util;
 
 import java.util.concurrent.SubmissionPublisher;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.concurrent.Flow.Subscription;
 import java.util.concurrent.Flow;
 
-public class GenericProcessor<S, T> extends SubmissionPublisher<T> implements Flow.Processor<S, T> {
+public class FilterProcessor<T> extends SubmissionPublisher<T> implements Flow.Processor<T, T> {
 	private Flow.Subscription subscription;
-	private final Function<S, T> function;
+	private final Predicate<T> delegate;
 	
-	public GenericProcessor(Function<S, T> function) {
+	public FilterProcessor(Predicate<T> delegate) {
 		super();
-		this.function = function;
+		this.delegate = delegate;
 	}
 	@Override
 	public void onSubscribe(Subscription subscription) {
@@ -20,8 +21,10 @@ public class GenericProcessor<S, T> extends SubmissionPublisher<T> implements Fl
 	}
 
 	@Override
-	public void onNext(S item) {
-		submit(function.apply(item));
+	public void onNext(T item) {
+		if(delegate.test(item)) {
+			submit(item);
+		}
 	}
 
 	@Override
@@ -31,7 +34,6 @@ public class GenericProcessor<S, T> extends SubmissionPublisher<T> implements Fl
 
 	@Override
 	public void onComplete() {
-		System.out.println("GenericProcessor onComplete");
 		close();
 	}
 }

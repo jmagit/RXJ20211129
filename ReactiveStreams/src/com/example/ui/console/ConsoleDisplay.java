@@ -1,9 +1,11 @@
-package com.example.demos;
+package com.example.ui.console;
 
 import java.util.concurrent.Flow;
 import java.util.concurrent.Flow.Subscription;
 
-public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
+import com.example.util.Sleeper;
+
+public class ConsoleDisplay implements Flow.Subscriber<String> {
 	private Flow.Subscription subscription;
 	private boolean continuar = true;
 	
@@ -26,12 +28,10 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 
 	@Override
 	public void onComplete() {
-		System.out.println("PintaCadenaSubscriber onComplete");
 	}
 	
 	public void cancel() {
 		continuar = false;
-		//subscription.cancel();
 	}
 	
 	public void continua() {
@@ -40,6 +40,3 @@ public class PintaCadenaSubscriber implements Flow.Subscriber<String> {
 	}
 
 }
-
-
-
