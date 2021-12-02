@@ -36,6 +36,7 @@ public class DemosResource {
 	
 	@Autowired
 	PersonasRepository dao;
+	
 	@GetMapping("/personas")
 	public Flux<Persona> personas() {
 //		dao.findById("61a342e5d0ae660ec24269ce");
@@ -43,9 +44,9 @@ public class DemosResource {
 //		dao.deleteById("61a342e5d0ae660ec24269ce");
 		return dao.findAll();
 	}
-//	@GetMapping("/lento")
-//	public Iterable<Persona> lento() {
-//		return dao.findAll()..toIterable().;
-//	}
+	@GetMapping("/lento")
+	public Mono<List<Persona>> lento() {
+		return dao.findAll().collectList();
+	}
 
 }
