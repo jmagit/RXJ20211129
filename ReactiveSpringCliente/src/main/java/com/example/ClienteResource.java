@@ -40,6 +40,7 @@ public class ClienteResource {
 		List<Persona> l3 = rest.getForObject("http://localhost:8001/personas?page=2", List.class);
 		return Flux.merge(Flux.fromIterable(l1), Flux.fromIterable(l2),Flux.fromIterable(l3));
 	}
+	
 	@GetMapping("/masrapido")
 	Flux<Persona> masrapido() {
 		WebClient client = WebClient.create("http://localhost:8001");

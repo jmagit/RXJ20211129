@@ -53,7 +53,7 @@ public class DemosResource {
 	}
 	@GetMapping("/lento/{id}")
 	public Mono<Persona> lento(@PathVariable String id) {
-		return dao.findById(id).delayElement(Duration.ofSeconds(3));
+		return dao.findById(id).delayElement(Duration.ofSeconds(1));
 	}
 	@GetMapping("/rapido/{id}")
 	public Mono<Persona> rapido(@PathVariable String id) {
