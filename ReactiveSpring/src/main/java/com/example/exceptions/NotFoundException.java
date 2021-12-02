@@ -3,7 +3,7 @@ package com.example.exceptions;
 public class NotFoundException extends Exception {
 
 	public NotFoundException() {
-		// TODO Auto-generated constructor stub
+		this("Not Found");
 	}
 
 	public NotFoundException(String message) {
@@ -12,7 +12,7 @@ public class NotFoundException extends Exception {
 	}
 
 	public NotFoundException(Throwable cause) {
-		super(cause);
+		super("Not Found", cause);
 		// TODO Auto-generated constructor stub
 	}
 

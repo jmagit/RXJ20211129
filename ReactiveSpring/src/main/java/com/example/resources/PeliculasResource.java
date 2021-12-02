@@ -15,39 +15,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.domains.entities.Peliculas;
 import com.example.domains.entities.Persona;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+import com.example.repositories.PeliculasRepository;
 import com.example.repositories.PersonasRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/personas")
-public class PersonasResource {
+@RequestMapping("/peliculas")
+public class PeliculasResource {
 	@Autowired
-	PersonasRepository dao;
+	PeliculasRepository dao;
 
 	@GetMapping
-	public Flux<Persona> getAll(@RequestParam(required = true, defaultValue = "0") int page, @RequestParam(required = true, defaultValue = "20") int rows) {
+	public Flux<Peliculas> getAll(@RequestParam(required = true, defaultValue = "0") int page, @RequestParam(required = true, defaultValue = "20") int rows) {
 		return dao.findAll().skip(page*rows).take(rows);
 		
 	}
 	
 	@GetMapping(path = "/{id}")
-	public Mono<Persona> getOne(@PathVariable String id) {
+	public Mono<Peliculas> getOne(@PathVariable String id) {
 		return dao.findById(id).single().onErrorMap(original -> new NotFoundException(original));
 		
 	}
 	@PostMapping
-	public Mono<Persona> create(@RequestBody Persona item) {
-		return dao.insert(item).onErrorMap(original -> new InvalidDataException("Mi error: " + original.getMessage(), original));
+	public Mono<Peliculas> create(@RequestBody Peliculas item) {
+		return dao.insert(item).onErrorMap(original -> new InvalidDataException(original.getMessage(), original));
 	}
 	@PutMapping(path = "/{id}")
-	public Mono<Persona> update(@PathVariable String id, @Valid @RequestBody Persona item) {
-		if(!id.equals(item.getId()))
-			return Mono.error(new InvalidDataException("Mal las claves"));
+	public Mono<Peliculas> update(@Valid @PathVariable String id, @RequestBody Peliculas item) {
 		return dao.save(item); //.onErrorMap(original -> new InvalidDataException(original.getMessage(), original));
 	}
 	

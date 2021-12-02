@@ -13,6 +13,9 @@ import javax.naming.directory.InvalidAttributesException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
@@ -25,6 +28,11 @@ public class ReactiveSpringApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReactiveSpringApplication.class, args);
+	}
+
+	@Bean
+	public ValidatingMongoEventListener validatingMongoEventListener(LocalValidatorFactoryBean factory) {
+		return new ValidatingMongoEventListener(factory);
 	}
 
 	public static class MessageService {

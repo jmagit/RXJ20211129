@@ -1,9 +1,12 @@
 package com.example.resources;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -47,6 +50,19 @@ public class DemosResource {
 	@GetMapping("/lento")
 	public Mono<List<Persona>> lento() {
 		return dao.findAll().collectList();
+	}
+	@GetMapping("/lento/{id}")
+	public Mono<Persona> lento(@PathVariable String id) {
+		return dao.findById(id).delayElement(Duration.ofSeconds(3));
+	}
+	@GetMapping("/rapido/{id}")
+	public Mono<Persona> rapido(@PathVariable String id) {
+		return dao.findById(id);
+	}
+	
+	@GetMapping(path = "/cotilla")
+	public Flux<Entry<String,List<String>>> cotilla(ServerHttpRequest request) {
+		return Flux.fromIterable(request.getHeaders().entrySet());
 	}
 
 }

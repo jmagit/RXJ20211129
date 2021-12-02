@@ -15,16 +15,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-@Document("personas")
-public class Persona {
+@Document("pelis")
+public class Peliculas {
 	@Id
 	private String id;
-	@NotBlank
-	@Length(min = 2, max = 20)
-	private String nombre;
-	@Length(min = 2, max = 20)
-	private String apellidos;
-	@Min(16)
-	@Max(67)
-	private int edad;
+	private String titulo;
+	private String genero;
+	private Integer duracion;
 }
